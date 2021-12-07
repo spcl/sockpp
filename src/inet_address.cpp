@@ -91,7 +91,7 @@ void inet_address::create(uint32_t addr, in_port_t port)
 
 // --------------------------------------------------------------------------
 
-void inet_address::create(const std::string& saddr, in_port_t port)
+void inet_address::create(std::string_view saddr, in_port_t port)
 {
 	addr_ = sockaddr_in{};
 	addr_.sin_family = AF_INET;

@@ -50,6 +50,7 @@
 #include "sockpp/sock_address.h"
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <cstring>
 #include <algorithm>
 
@@ -106,6 +107,16 @@ public:
 		create(saddr, port);
 	}
 	/**
+	 * Constructs an address using the name of the host and the specified
+	 * port. This attempts to resolve the host name to an address.
+	 *
+	 * @param saddr The name of the host.
+	 * @param port The port number in native/host byte order.
+	 */
+	inet_address(std::string_view saddr, in_port_t port) {
+		create(saddr, port);
+	}
+	/**
 	 * Constructs the address by copying the specified structure.
 	 * @param addr The other address
 	 */
@@ -157,7 +168,7 @@ public:
 	 * @param port The port number in native/host byte order.
      * @throw sys_error, getaddrinfo_error
 	 */
-	void create(const std::string& saddr, in_port_t port);
+	void create(std::string_view saddr, in_port_t port);
 	/**
 	 * Gets the 32-bit internet address.
 	 * @return The internet address in the local host's byte order.
@@ -214,9 +225,9 @@ public:
 	}
 	/**
 	 * Gets a printable string for the address.
-	 * This gets the simple dot notation of the address as returned from 
+	 * This gets the simple dot notation of the address as returned from
 	 * inet_ntop(). It does not attempt a host lookup.
-	 * @return A string representation of the address in the form 
+	 * @return A string representation of the address in the form
 	 *  	   'address:port'
 	 */
 	std::string to_string() const;
@@ -225,8 +236,8 @@ public:
 // --------------------------------------------------------------------------
 
 /**
- * Stream inserter for the address. 
- * This uses the simple dot notation of the address as returned from 
+ * Stream inserter for the address.
+ * This uses the simple dot notation of the address as returned from
  * inet_ntop(). It does not attempt a host lookup.
  * @param os The output stream
  * @param addr The address
